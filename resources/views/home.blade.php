@@ -48,76 +48,32 @@
         <div class="row ">
             <div class="col-md-12">
                 <div class="well">
-                    <form  class="rtl-form"id="order-form">
-                        <div class="form-group">
-                            <label for="orderform-category" class="control-label">القسم</label>
-                            <select class="form-control" id="orderform-category" name="OrderForm[category]">
-                                <option value="119"  selected > التسويق الاكتروني</option>
-                                <option value="29" > الأرخص مبيعا </option>
-                                <option value="54" > متابعين تيك توك</option>
-                                <option value="76" > لايكات تيك توك</option>
-                                <option value="165" >   تيك توك بكج من الاعلانات</option>
-                                <option value="77" > مشاهدات تيك توك</option>
-                                <option value="130" > مشاهدات تيك توك بث مباشر</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="service" class="control-label">الخدمة</label>
-                            <select id="orderform-service" class="form-control" id="service" name="OrderForm[service]">
-                                <option value="119"  selected > التسويق الاكتروني</option>
-                                <option value="29" > الأرخص مبيعا </option>
-                                <option value="54" > متابعين تيك توك</option>
-                                <option value="76" > لايكات تيك توك</option>
-                                <option value="165" >   تيك توك بكج من الاعلانات</option>
-                                <option value="77" > مشاهدات تيك توك</option>
-                                <option value="130" > مشاهدات تيك توك بث مباشر</option>
-                            </select>
-                        </div>
-                        <div id="fields">
-                            <label for="formGroupExampleInput" class="form-label">الرابط</label>
-                            <input type="text" class="form-control" id="formGroupExampleInput" placeholder="https://www.com">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="charge" class="control-label">الكمية</label>
-                            <input type="text" class="form-control" id="charge" value="0" readonly>
-                        </div>
-
-                        <div class="form-floating">
-                            <label for="floatingTextarea2">أسماء المستخدمين (1 لكل سطر)</label>
-                            <textarea class="form-control" placeholder="0" id="floatingTextarea2" style="height: 200px"></textarea>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="charge" class="control-label">السعر النهائي</label>
-                            <input type="text" class="form-control" id="charge" value="$0.00" readonly>
-                        </div>
-
-
-                        <input type="hidden" name="_csrf" value="R1905K0Al1PvcP1qBHBrJ1qqkS2DDRkAAmnqqv_MKi8lKyeP_3XzMrYmkzp3FxxAYub2aq5lbXk6XYvnj5pgZA==">
+                    <form  class="rtl-form"id="order-form" method="post" action="{{route('orders.store')}}">
+                        <x-general-input :categories="$categories"></x-general-input>
+                       <div id="dynamic"></div>
                         <button type="submit" class="btn btn-success btn-login ">إرسال</button>
-                        <div class="form-group" style="margin-top:20px">
-                            <label for="service_description" class="control-label">معلومات عن الخدمة</label>
-                            <div class="panel-body border-solid border-rounded description">
-                                <span>اطلب الآن اي تصميم تريده</span>
-                                <br>
-                                <span>مميزات الخدمة :</span>
-                                <br>
-                                <span>1- يمكنني التعديل على التصميم حتى يلقى اعجابك ورضاك</span>
-                                <br>
-                                <span>2- أحصل على التصميم بدقة عالية جداً Jpg أو Png</span>
-                                <br>
-                                <span>3- سرعة التنفيذ خلال ساعات التواجد يتم تسليمك التصميم بشكل فوري</span>
-                                <br>
-                                <span>4- يمكنك الحصول على ملف مفتوح Psd ( راجع التطويرات )</span>
-                                <br>
-                                <span>لتصميم أكثر من صورة يرجى تحديد عدد مرات طلب هذه الخدمة بعدد الصور المراد تنفيذها قبل الشراء أو راجع التطويرات</span>
-                                <br>
-                                <span>قم بمراسلتي قبل طلب الخدمة</span>
-                                <br>
-                                <span>يرجى ارفاق المعلومات الكافية ومعها شعار لوضعه على الصورة بعد طلبك للخدمة</span>
-                            </div>
-                        </div>
+{{--                        <div class="form-group" style="margin-top:20px">--}}
+{{--                            <label for="service_description" class="control-label">معلومات عن الخدمة</label>--}}
+{{--                            <div class="panel-body border-solid border-rounded description">--}}
+{{--                                <span>اطلب الآن اي تصميم تريده</span>--}}
+{{--                                <br>--}}
+{{--                                <span>مميزات الخدمة :</span>--}}
+{{--                                <br>--}}
+{{--                                <span>1- يمكنني التعديل على التصميم حتى يلقى اعجابك ورضاك</span>--}}
+{{--                                <br>--}}
+{{--                                <span>2- أحصل على التصميم بدقة عالية جداً Jpg أو Png</span>--}}
+{{--                                <br>--}}
+{{--                                <span>3- سرعة التنفيذ خلال ساعات التواجد يتم تسليمك التصميم بشكل فوري</span>--}}
+{{--                                <br>--}}
+{{--                                <span>4- يمكنك الحصول على ملف مفتوح Psd ( راجع التطويرات )</span>--}}
+{{--                                <br>--}}
+{{--                                <span>لتصميم أكثر من صورة يرجى تحديد عدد مرات طلب هذه الخدمة بعدد الصور المراد تنفيذها قبل الشراء أو راجع التطويرات</span>--}}
+{{--                                <br>--}}
+{{--                                <span>قم بمراسلتي قبل طلب الخدمة</span>--}}
+{{--                                <br>--}}
+{{--                                <span>يرجى ارفاق المعلومات الكافية ومعها شعار لوضعه على الصورة بعد طلبك للخدمة</span>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
                     </form>
                 </div>
             </div>
@@ -287,4 +243,93 @@
             </div>
         </section>
     </div>
+@endsection
+
+@section('scripts')
+    <script>
+        let category=document.getElementById('orderForm-category');
+        let services=document.getElementById('orderForm-service');
+          category.addEventListener('change',function (e){
+              let text=this.value;
+                  $.ajax({
+                      type: 'get',
+                      url: "{{route('service.category')}}",
+                      data:{
+                          '_token':"{{csrf_token()}}",
+                          'category':text,
+                      },
+
+
+                      success: function(data) {
+                          if (data.status == 200) {
+
+                              let htmlTags = '<option value=""></option>';
+                              for (const [key, $service] of Object.entries(data.services)) {
+                                  htmlTags += `<option  value="${$service.id}"  onclick="changeForm('aa')">${$service.name}</option>`;
+
+                              }
+
+                              document.getElementById('orderForm-service').innerHTML = htmlTags;
+
+
+                          }
+                      }
+                  });
+
+
+          });
+          document.getElementById('orderForm-service').addEventListener('change',function (){
+               let id=this.value;
+              $.ajax({
+                  type: 'get',
+                  url: "{{route('service.get')}}",
+                  data:{
+                      '_token':"{{csrf_token()}}",
+                      'id':id
+                  },
+
+
+                  success: function(data) {
+                      if (data.status == 200) {
+                          $comp=document.getElementsByTagName('x-dynamic-component')[0];
+                          // $comp.setAttribute('component','default')
+                          node=document.createElement('x-dynamic-component');
+
+                          node.setAttribute('component','default');
+                          const $type=data.type;
+                          if ($type=='Default'||$type=='Package')
+                          document.getElementById('dynamic').innerHTML=`<x-dynamic-component id="dynamic-comp" component="default"  />`
+
+                      else if ($type=='Custom Comments'||$type=='Custom Comments Package')
+                          document.getElementById('dynamic').innerHTML=`<x-dynamic-component id="dynamic-comp" component="custome" />`;
+
+                      else if ($type=='Mentions Custom List')
+                              document.getElementById('dynamic').innerHTML=`<x-dynamic-component id="dynamic-comp" component="mentions"  />`;
+                          else if ($type=='Mentions User Followers'||$type=='Mentions User Followers')
+                          document.getElementById('dynamic').innerHTML=`<x-dynamic-component id="dynamic-comp" component="mentions2"  />`;
+
+                      else if ($type=='Comment Likes')
+                          document.getElementById('dynamic').innerHTML=`<x-dynamic-component id="dynamic-comp" component="comment-likes"  />`;
+
+                      else if ($type=='Poll')
+                          document.getElementById('dynamic').innerHTML=`<x-dynamic-component id="dynamic-comp" component="poll" />`;
+
+                      else if ($type=='Comment Replies')
+                          document.getElementById('dynamic').innerHTML=`<x-dynamic-component id="dynamic-comp" component="comment-replies" />`;
+
+                      else if ($type=='Subscriptions')
+                          document.getElementById('dynamic').innerHTML=`<x-dynamic-component id="dynamic-comp" component="subscriptions" />`;
+
+
+
+
+                      }
+
+                  }
+              });
+
+          });
+
+    </script>
+
 @endsection

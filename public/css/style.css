@@ -1314,7 +1314,7 @@ td.category {
 }
 
 .rtl-content.content {
-    padding-right: 7%;
+    padding-right:17%;
     padding-left: 0;
     transition: padding-right 0.5s;
 }

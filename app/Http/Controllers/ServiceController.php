@@ -105,6 +105,7 @@ class ServiceController extends Controller
 
         $services= $this->drd3mService->service(['key'=>'6fa5f190e70a20c81d5e8b175f2e6304',
             'action'=>'services']);
+        dd($services);
 //        $ids=collect($services)->pluck('service');
 //        $ids_in_servies=Service::select('id')->whereIn('id',$ids)->get()->pluck('id');
 //        $ids=$ids->diff($ids_in_servies);
@@ -162,6 +163,56 @@ class ServiceController extends Controller
             'status'=>200,
             'results'=>$services->count()!=0?$services:null
         ]);
+    }
+
+    public function servicesToCategory(Request $request){
+         $services=Service::where('category',$request->category)->get();
+         if (!$services)
+             return response()->json([
+                 'status'=>404,
+                 'message'=>'no services'
+             ]);
+        return response()->json([
+            'status'=>200,
+            'services'=>$services
+        ]);
+    }
+
+    public function getService(Request $request){
+        $service=Service::find($request->id);
+
+          return response()->json([
+             'status'=>200,
+             'type' =>$service->type
+
+          ]);
+
+
+    }
+    public function getComponent($type){
+        $result='';
+        if ($type=='Default'||$type=='Package')
+            $result='default';
+        elseif ($type=='Custom Comments'||$type=='Custom Comments Package')
+            $result='custome';
+        elseif ($type=='Custom Comments'||$type=='Custom Comments Package')
+            $result='custome';
+        elseif ($type='Mentions Custom List')
+            $result='mentions';
+        elseif ($type='Mentions User Followers'||$type=='Mentions User Followers')
+            $result='mentions2';
+        elseif ($type='Comment Likes')
+            $result='comment-likes';
+        elseif ($type='Poll')
+            $result='poll';
+        elseif ($type='Comment Replies')
+            $result='comment-replies';
+        elseif ($type='Subscriptions')
+            $result='subscriptions';
+
+        return $result;
+
+
     }
 
 

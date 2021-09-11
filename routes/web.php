@@ -24,3 +24,5 @@ require __DIR__.'/auth.php';
 Route::get('store/services',[\App\Http\Controllers\ServiceController::class,'getServices']);
 Route::resource('services','App\Http\Controllers\ServiceController');
 Route::post('services/search',[\App\Http\Controllers\ServiceController::class,'search'])->name('service.search');
+Route::get('category/services',[\App\Http\Controllers\ServiceController::class,'servicesToCategory'])->name('service.category');
+Route::get('service',[\App\Http\Controllers\ServiceController::class,'getService'])->name('service.get');
