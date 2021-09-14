@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,3 +27,12 @@ Route::resource('services','App\Http\Controllers\ServiceController');
 Route::post('services/search',[\App\Http\Controllers\ServiceController::class,'search'])->name('service.search');
 Route::get('category/services',[\App\Http\Controllers\ServiceController::class,'servicesToCategory'])->name('service.category');
 Route::get('service',[\App\Http\Controllers\ServiceController::class,'getService'])->name('service.get');
+Route::resource('orders','App\Http\Controllers\OrderController');
+Route::get('/send',function (){
+     Mail::raw('This is an test e-mail', function ($message) {
+         $message->to("lel23443217399@gmail.com", "someone");
+         $message->subject("hi checking");
+         $message->getSwiftMessage();
+     });
+     return "true";
+});

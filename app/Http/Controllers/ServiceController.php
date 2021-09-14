@@ -183,7 +183,8 @@ class ServiceController extends Controller
 
           return response()->json([
              'status'=>200,
-             'type' =>$service->type
+             'type' =>$service->type,
+              'service'=>$service
 
           ]);
 

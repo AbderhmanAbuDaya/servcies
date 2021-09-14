@@ -1,7 +1,7 @@
 @props(['categories'])
 <div class="form-group">
     <label for="orderform-category" class="control-label">القسم</label>
-    <select class="form-control" id="orderForm-category" name="OrderForm[category]">
+    <select class="form-control" id="orderForm-category" name="order[category]">
         <option value=""></option>
         @if(!empty($categories))
         @foreach($categories as $category)

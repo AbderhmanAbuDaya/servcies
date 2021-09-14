@@ -49,8 +49,14 @@
             <div class="col-md-12">
                 <div class="well">
                     <form  class="rtl-form"id="order-form" method="post" action="{{route('orders.store')}}">
+                        @csrf
                         <x-general-input :categories="$categories"></x-general-input>
                        <div id="dynamic"></div>
+                        <div class="form-group">
+                            <label for="charge" class="control-label">السعر النهائي</label>
+                            <input type="string" name="order[price]" class="form-control" id="charge" value="0" readonly >
+                        </div>
+
                         <button type="submit" class="btn btn-success btn-login ">إرسال</button>
 {{--                        <div class="form-group" style="margin-top:20px">--}}
 {{--                            <label for="service_description" class="control-label">معلومات عن الخدمة</label>--}}
@@ -270,7 +276,7 @@
                               }
 
                               document.getElementById('orderForm-service').innerHTML = htmlTags;
-
+                              document.getElementById('dynamic').innerText='';
 
                           }
                       }
@@ -278,6 +284,7 @@
 
 
           });
+
           document.getElementById('orderForm-service').addEventListener('change',function (){
                let id=this.value;
               $.ajax({
@@ -291,21 +298,53 @@
 
                   success: function(data) {
                       if (data.status == 200) {
+                          let charge=document.getElementById('charge');
+
                           $comp=document.getElementsByTagName('x-dynamic-component')[0];
                           // $comp.setAttribute('component','default')
                           node=document.createElement('x-dynamic-component');
 
                           node.setAttribute('component','default');
                           const $type=data.type;
-                          if ($type=='Default'||$type=='Package')
-                          document.getElementById('dynamic').innerHTML=`<x-dynamic-component id="dynamic-comp" component="default"  />`
+                         let $arr= {
+                              'min': data.service.min,
+                             'max':data.service.max
+                          };
 
-                      else if ($type=='Custom Comments'||$type=='Custom Comments Package')
-                          document.getElementById('dynamic').innerHTML=`<x-dynamic-component id="dynamic-comp" component="custome" />`;
 
-                      else if ($type=='Mentions Custom List')
+                      if ($type=='Default')
+                          document.getElementById('dynamic').innerHTML=`<x-dynamic-component id="dynamic-comp" component="default" min="${$arr.min}" max="${$arr.max}" />`
+                      else if ($type=='Package'){
+                           charge.value=data.service.rate;
+                      }
+                      else if ($type=='Custom Comments'||$type=='Custom Comments Package') {
+                          document.getElementById('dynamic').innerHTML = `<x-dynamic-component id="dynamic-comp" component="custome"  min="${$arr.min}" max="${$arr.max}" />`;
+                          let comments=document.getElementById('comments');
+                          comments.style.whiteSpace = "pre-wrap";
+
+                          let qun=document.getElementById('quantity')
+                          if ($type=='Custom Comments'){
+                                    comments.addEventListener('keyup',function (e){
+                                        console.log((countLine(comments.value)))
+                                        // if(e.which === 13 && !e.shiftKey) {
+                                            if(chuckLastElementInTextNotEmpty(comments.value)) {
+                                                if ((countLine(comments.value) <= 100))
+                                                    charge.value = countLine(comments.value) * (data.service.rate / (data.service.max * 10));
+                                                else
+                                                    charge.value = data.service.rate;
+                                                qun.value = countLine(comments.value);
+                                            // }
+                                        }
+
+                                    });
+
+                               }else{
+                                   charge.value=data.service.rate
+                               }
+                      } else if ($type=='Mentions Custom List')
                               document.getElementById('dynamic').innerHTML=`<x-dynamic-component id="dynamic-comp" component="mentions"  />`;
-                          else if ($type=='Mentions User Followers'||$type=='Mentions User Followers')
+
+                      else if ($type=='Mentions User Followers'||$type=='Mentions User Followers')
                           document.getElementById('dynamic').innerHTML=`<x-dynamic-component id="dynamic-comp" component="mentions2"  />`;
 
                       else if ($type=='Comment Likes')
@@ -320,16 +359,62 @@
                       else if ($type=='Subscriptions')
                           document.getElementById('dynamic').innerHTML=`<x-dynamic-component id="dynamic-comp" component="subscriptions" />`;
 
+                          let checkbox=document.getElementById("checkbox-interval-order");
 
+                          checkbox.addEventListener('click',function (e){
+                              let charge=document.getElementById('charge');
+                              let qun=document.getElementById('quantity')
+                              const div_interval_order=document.getElementById('div-interval-order')
+                              if (this.value==1) {
+                                  div_interval_order.classList.remove('hidden')
+                                  document.getElementById('field-orderform-fields-interval').addEventListener('keyup',function (){
+                                      console.log(this.value);
+                                    let totalQun=document.getElementById('field-orderform-totalQun-interval');
+                                       totalQun.value=(this.value*qun.value);
+                                      charge.value=(totalQun.value/1000)*data.service.rate;
 
+                                  });
+                              }else {
+                                  alert('a')
+                                  //div_interval_order.classList.add('hidden');
+                              }
+                          });
+                        qun.addEventListener('keyup',function (e){
+                            console.log(this.value);
+                            charge.value=(this.value/1000)*data.service.rate;
+                        });
 
                       }
+
+
+
 
                   }
               });
 
           });
 
+        function countLine(test){
+            lines = test.split('\n');
+            lines=lines.filter(e=>e);
+            return lines.length;
+        }
+        function chuckLastElementInTextNotEmpty(test){
+            lines = test.split('\n');
+            return lines[lines.length-1]!='';
+        }
     </script>
 
+    <script>
+        let checkbox=document.getElementById("checkbox-interval-order");
+        checkbox.addEventListener('click',function (e){
+            const div_interval_order=document.getElementById('div-interval-order')
+            if (this.value==1) {
+                div_interval_order.classList.remove('hidden')
+            }else {
+                alert('a')
+                //div_interval_order.classList.add('hidden');
+            }
+        });
+    </script>
 @endsection
