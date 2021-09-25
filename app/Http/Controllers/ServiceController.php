@@ -31,7 +31,8 @@ class ServiceController extends Controller
 
        return view('services',[
            'categories'=>$categories,
-           'results'=>$GLOBALS['result']
+           'results'=>$GLOBALS['result'],
+
        ]);
     }
 
@@ -103,8 +104,8 @@ class ServiceController extends Controller
 
     public function getServices(){
 
-        $services= $this->drd3mService->service(['key'=>'6fa5f190e70a20c81d5e8b175f2e6304',
-            'action'=>'services']);
+            $services= $this->drd3mService->service(['key'=>'6fa5f190e70a20c81d5e8b175f2e6304',
+                'action'=>'services']);
         dd($services);
 //        $ids=collect($services)->pluck('service');
 //        $ids_in_servies=Service::select('id')->whereIn('id',$ids)->get()->pluck('id');
@@ -179,6 +180,10 @@ class ServiceController extends Controller
     }
 
     public function getService(Request $request){
+        $service=collect();
+        if ($request->header('id'))
+        $service=Service::find($request->header('id'));
+        else
         $service=Service::find($request->id);
 
           return response()->json([

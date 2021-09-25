@@ -79,7 +79,7 @@ return [
         'array' => 'The :attribute must not have more than :value items.',
     ],
     'max' => [
-        'numeric' => 'The :attribute must not be greater than :max.',
+        'numeric' => ':attribute يجب ان لا تقل عن :max',
         'file' => 'The :attribute must not be greater than :max kilobytes.',
         'string' => 'The :attribute must not be greater than :max characters.',
         'array' => 'The :attribute must not have more than :max items.',
@@ -87,7 +87,7 @@ return [
     'mimes' => 'The :attribute must be a file of type: :values.',
     'mimetypes' => 'The :attribute must be a file of type: :values.',
     'min' => [
-        'numeric' => 'The :attribute must be at least :min.',
+        'numeric' => ':attribute يجب ان لا تقل عن :min',
         'file' => 'The :attribute must be at least :min kilobytes.',
         'string' => 'The :attribute must be at least :min characters.',
         'array' => 'The :attribute must have at least :min items.',
@@ -99,7 +99,7 @@ return [
     'password' => 'The password is incorrect.',
     'present' => 'The :attribute field must be present.',
     'regex' => 'The :attribute format is invalid.',
-    'required' => 'The :attribute field is required.',
+    'required' => ':attribute مطلوبة',
     'required_if' => 'The :attribute field is required when :other is :value.',
     'required_unless' => 'The :attribute field is required unless :other is in :values.',
     'required_with' => 'The :attribute field is required when :values is present.',
@@ -121,7 +121,7 @@ return [
     'timezone' => 'The :attribute must be a valid timezone.',
     'unique' => 'The :attribute has already been taken.',
     'uploaded' => 'The :attribute failed to upload.',
-    'url' => 'The :attribute must be a valid URL.',
+    'url' => ':attribute غير صحيح.',
     'uuid' => 'The :attribute must be a valid UUID.',
 
     /*
@@ -152,6 +152,13 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'order.service'=>'الخدمة',
+        'order.link'=>'الرابط',
+        'order.quantity'=>'الكمية',
+        'order.answer_number'=>'رقم خيار تصويت',
+        'order.min'=>'اقل كمية',
+        'order.max'=>'اكبر كمية'
+    ],
 
 ];

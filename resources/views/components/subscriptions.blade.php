@@ -1,23 +1,27 @@
 
 <div class="form-group">
     <label class="control-label" for="field-orderform-fields-username">اسم المستخدم</label>
-    <input class="form-control" name="order[username]" value="" type="text" id="field-orderform-fields-interval">
+    <input class="form-control" name="order[username]" value="" type="text" id="field-orderform-fields-username">
+    <div id="alert-username" class="alert-danger"></div>
 </div>
 
 <div class="form-group">
     <label class="control-label" for="field-orderform-fields-username">عدد المنشورات</label>
-    <input class="form-control" name="order[posts]" value="" type="text" id="field-orderform-fields-interval">
+    <input class="form-control" name="order[posts]" value="" type="number" id="field-orderform-posts">
 </div>
 
 <div class="form-group">
     <label class="control-label" for="field-orderform-fields-username">اقل كمية</label>
-    <input class="form-control" name="order[min]" value="" type="text" id="field-orderform-fields-interval">
+    <input class="form-control" name="order[min]" value="" type="number" id="field-orderform-min">
 </div>
 
 <div class="form-group">
     <label class="control-label" for="field-orderform-fields-username"> اقصى كمية</label>
-    <input class="form-control" name="order[max]" value="" type="text" id="field-orderform-fields-interval">
+    <input class="form-control" name="order[max]" value="" type="number" id="field-orderform-max">
+    <p>اقل كمية {{$min}}اكبر كمية {{$max}}</p>
+
 </div>
+<div id="alert-qun" class="alert-danger"></div>
 
 <div class="row">
     <div class="col-md-6">
@@ -64,10 +68,10 @@
 
         </select>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-6 mb-2">
         <label for="field-orderform-fields-expiry">الإنتهاء</label>
         <div class="input-group">
-            <input class="form-control datetime" autocomplete="off" name="order[expiry]" value="" type="text" id="field-orderform-fields-expiry">
+            <input class="form-control datetime" autocomplete="off" name="order[expiry]" value="" type="date" id="field-orderform-fields-expiry">
             <span class="input-group-btn">
                     <button class="btn btn-default btn-big-secondary clear-datetime" type="button" data-rel="#field-orderform-fields-expiry"><span class="fa far fa-trash-alt"></span></button>
                 </span>

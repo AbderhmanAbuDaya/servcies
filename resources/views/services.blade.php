@@ -2,24 +2,6 @@
 
 
 @section('content')
-    <div class="container">
-        <div class="row">
-            <div class="wrapper">
-                <div class=" rtl-side-bar  side-bar hidden-xs">
-                    <ul>
-                        <li class="menu-head"><a href="/"> دكتور دعم </a><a href="#" class="push_menu"><span class="fa fa-fw fas fa-bars pull-right"></span></a>
-                        </li>
-                        <div class="menu">
-                            <li><a  class="active"  href="#">طلب جديد<span class="fa fa-fw fas fa-plus pull-right"></span></a></li>
-                            <li><a  href="#"> قائمة الخدمات<span class="fa fa-fw fas fa-star pull-right"></span></a></li>
-                            <li><a  href="#">سجل الطلبات<span class="fa fa-fw fas fa-file-alt pull-right"></span></a></li>
-                            <li><a  href="#">شحن الرصيد<span class="fa fa-fw fas fa-credit-card pull-right"></span></a></li>
-                            <li><a  href="https://youtu.be/EWa5PukKbIs">شرح الموقع بالفيديو<span class="fa fa-fw fa fa-play pull-right"></span></a></li>
-                            <li><a  href="#"> الدعم الفني<span class="fa fa-fw fas fa-plug pull-right"></span></a></li>
-                            <li><a  href="#">الأسئلة الشائعة<span class="fa fa-fw fas fa-question-circle pull-right"></span></a></li>
-                        </div>
-                    </ul>
-                </div>
 
 
 
@@ -109,19 +91,7 @@
                                             </tbody>
                                         </table>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                        <footer>
-                            <div class=" rtl-content ">
-                                <div class="" style="font-size: 12px;">
-                                    موقع <a href="/" class="text-primary">دكتور عبود</a> © 2012–2020. جميع الحقوق محفوظة. <span><a href="#" class="text-primary">شروط الإستخدام</a> | <a href="#" class="text-primary">الأسئلة الشائعة</a> | <a href="#" class="text-primary">التعليمات</a> | <a href="#" class="text-primary">إتصل بنا</a> | <a href="#" class="text-primary">سياسة الإسترجاع</a></span></div>
 
-                            </div>
-                        </footer>
-                    </div>
-                </div>
-            </div>
 
 @endsection
 

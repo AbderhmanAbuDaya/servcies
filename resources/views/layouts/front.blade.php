@@ -8,15 +8,20 @@
     <meta name="description" content="">
     <meta name="velespay-verification" content="6Yk5zPor37wMI5UE8jdJ" />
     <!-- Custom Stylesheet -->
-    <link rel="stylesheet" type="text/css" href="css/min.css">
-    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="{{asset('css/min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('css/style.css')}}">
     <!-- Custom bootstrap -->
-    <link rel="stylesheet" type="text/css" href="bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{{asset('bootstrap.min.css')}}">
     <link rel="stylesheet" type="text/css" href="https://cdn.mypanel.link/css/font-awesome/css/all.min.css">
     <title>طلب جديد</title>
 </head>
 <body  class="rtl" >
-<!-- Start Nav -->
+<div class="container">
+    <div class="row">
+        <div class="wrapper">
+
+
+        <!-- Start Nav -->
 @include('includes.header')
 <!-- End Nav -->
 
@@ -24,6 +29,9 @@
 <!-- Start Sidebar  -->
 @include('includes.side')
 <!-- Start Sidebar  -->
+        </div>
+    </div>
+</div>
 
 <div class="content  rtl-content ">
     @yield('content')
@@ -51,6 +59,8 @@
 <script type="text/javascript" src="https://cdn.mypanel.link/9e34a3/nf2ak1h4llsa0njt.js">
 </script>
 <script type="text/javascript" src="https://cdn.mypanel.link/9e34a3/7sel7jrdqus1mrsq.js">
+</script>
+<script src="{{asset('js/app.js')}}">
 </script>
 
 @yield('scripts')

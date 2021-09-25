@@ -1,9 +1,14 @@
 <div class="form-group">
-    <label for="charge" class="control-label">الكمية</label>
-    <input type="string" name="order[quantity]" class="form-control" id="charge" value="0" readonly>
+    <label for="quantity" class="control-label">الكمية</label>
+    <input type="string" name="order[quantity]" class="form-control" id="quantity" value="0" >
+    <p>اقل كمية {{$min}}اكبر كمية {{$max}}</p>
+    <div id="alert-qun" class="alert-danger"></div>
+
 </div>
 
 <div class="form-group">
-    <label class="control-label" for="field-orderform-fields-username">كمية الاجوبة</label>
-    <input class="form-control" name="order[answer_number]" value="" type="text" id="field-orderform-fields-interval">
+    <label class="control-label" for="field-orderform-fields-username">رقم خيار التصويت</label>
+    <input class="form-control" name="order[answer_number]" value="" type="number" id="field-orderform-number-vote">
+    <div id="alert-num_vote" class="alert-danger"></div>
+
 </div>

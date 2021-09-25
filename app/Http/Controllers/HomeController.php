@@ -10,8 +10,9 @@ class HomeController extends Controller
     public function index(){
         $categories=Service::distinct('category')->pluck('category');
         return view('home',[
-            'categories'=>$categories
+            'categories'=>$categories,
         ]);
+
     }
 
     public function questions(){

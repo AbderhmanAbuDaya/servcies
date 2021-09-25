@@ -20,8 +20,8 @@ class CreateOrdersTable extends Migration
             $table->foreignId('service_id')->constrained('services')->nullOnDelete();
             $table->string('link');
             $table->integer('quantity');
-            $table->integer('runs')->nullable();
-            $table->integer('interval')->nullable();
+            $table->integer('runs')->nullable()??0;
+            $table->integer('interval')->nullable()??0;
             $table->string('charge');
             $table->string('currency')->default('USD');
             $table->string('my_charge');
