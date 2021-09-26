@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use App\Models\Service;
+use App\Models\Setting;
 use App\Services\Drd3mService;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -38,8 +40,11 @@ class OrderController extends Controller
     public function create()
     {
         $categories=Service::distinct('category')->pluck('category');
+        $percentage=Setting::where('key','percentage')->first()->value;
+
         return view('home',[
             'categories'=>$categories,
+            'percentage'=>$percentage
         ]);
     }
 
@@ -57,6 +62,8 @@ class OrderController extends Controller
             'order.service'=>'required|numeric|exists:services,id',
         ];
         $service=Service::find($request->input('order.service'));
+        $user=Auth::user();
+        $percentage=Setting::where('key','percentage')->first()->value;
          if ($service->type != 'Subscriptions')
              $rules=[
                  'order.link'=>'required|url',
@@ -68,33 +75,43 @@ class OrderController extends Controller
         if ($service->type == 'Default') {
             $rules['order.quantity'] = ['required', 'numeric','min:' . $service->min, 'max:' . $service->max, ''];
             $rules['order.quantity2']=['required_with:order.runs,order.interval'];
-            $dataRequest['price']=$dataRequest['price']+($dataRequest['price']*0.02);
 
             if (!empty($request->input('order.runs'))){
-                $dataRequest['price']=$dataRequest['quantity']*($service->rate/1000);
+                $dataRequest['price']=$dataRequest['quantity2']*($service->rate/1000);
+                $dataRequest['myPrice']=$dataRequest['price']+$dataRequest['price']*$percentage;
 //                $request->merge(['order.ss'=>9]);
+            }else{
+            $dataRequest['price']=$dataRequest['quantity']*($service->rate/1000);
+            $dataRequest['myPrice']=$dataRequest['price']+($dataRequest['price']*$percentage);
             }
-            $dataRequest['price']=$dataRequest['price']+($dataRequest['price']*0.02);
 
-        } else if ($service->type == 'Package'){
-            $dataRequest['price']=$service->rate + ($service->rate *0.02);
+        } else if ($service->type == 'Package' || $service->type == 'Custom Comments Package'){
+            $dataRequest['price']=$service->rate;
+            $dataRequest['myPrice']=$service->rate + ($service->rate *$percentage);
+
 
         } else if($service->type == 'Custom Comments'){
             $rules['order.quantity'] = ['required', 'numeric','min:' . $service->min, 'max:' . $service->max, ''];
-
+            $dataRequest['price']=$dataRequest['quantity']*($service->rate/1000);
+            $dataRequest['myPrice']=$dataRequest['price']+($dataRequest['price']*$percentage);
         }else if($service->type == 'Poll'){
             $rules['order.quantity'] = ['required', 'numeric','min:' . $service->min, 'max:' . $service->max, ''];
             $dataRequest['price']=$dataRequest['quantity']*($service->rate/1000);
-           $rules['order.answer_number']=['required','numeric'];
+            $dataRequest['myPrice']=$dataRequest['price']+($dataRequest['price']*$percentage);
+            $rules['order.answer_number']=['required','numeric'];
         }
     else if($service->type == 'Comment Replies'){
             $rules['order.quantity'] = ['required', 'numeric','min:' . $service->min, 'max:' . $service->max, ''];
-            $dataRequest['price']=$dataRequest['quantity']*($service->rate/1000);
-}else if($service->type == 'Subscriptions'){
+        $dataRequest['price']=$dataRequest['quantity']*($service->rate/1000);
+        $dataRequest['myPrice']=$dataRequest['price']+($dataRequest['price']*$percentage);
+    }else if($service->type == 'Subscriptions'){
         $rules['order.min'] = ['required', 'numeric','min:' . $service->min, 'max:' . $service->max,'greater_than_field:'.$request->min.','.$request->max];
         $rules['order.max'] = ['required', 'numeric','min:' . $service->min, 'max:' . $service->max];
-
+        return 'a';
 //        $dataRequest['price']=$dataRequest['quantity']*($service->rate/1000);
+    }else if($service->type == 'Mentions' || $service->type == 'Mentions Custom List' ||$service->type == 'Mentions User Followers'||$service->type == 'Comment Likes'){
+        $dataRequest['price']=$dataRequest['quantity']*($service->rate/1000);
+        $dataRequest['myPrice']=$dataRequest['price']+($dataRequest['price']*$percentage);
     }
 
 //        return $dataRequest;
@@ -105,7 +122,8 @@ class OrderController extends Controller
 //            $service=Service::where('category',$service->category)->get();
             return redirect()->back()->withErrors($validator)->withInput();
         }
-
+       if ($user->wallet < $dataRequest['myPrice'])
+           return redirect()->back()->with(['error'=>'رصيدك غير كافي']);
         $pass=[
             'key'=>'6fa5f190e70a20c81d5e8b175f2e6304',
             'action'=>'add',
@@ -128,25 +146,38 @@ class OrderController extends Controller
         return redirect()->back()->with(['error'=>$order_id['error']]);
 
     }
-        $order=  Order::create([
-            'user_id'=>1,
-            'order_id'=>$order_id['order'],
-            'service_id'=>$pass['service'],
-            'link'=>$pass['link'],
-            'quantity'=>$pass['quantity'],
-            'runs'=>$pass['runs']??0,
-            'interval'=>$pass['interval']??0,
-            'charge'=>$pass['price'],
-            'currency'=>'USD',
-            'my_charge'=>$pass['price']
-        ]);
-        $responce=[
-            'message'=>'تم ارسال طلبك بنجاح',
-            'order'=>$order_id['order'],
-            'service'=>$service->name,
-//            'qun'=>
-        ];
-        return redirect()->back()->with(['type_component'=>'Default']);
+        try {
+            DB::beginTransaction();
+            $user->wallet = $user->wallet - $pass['myPrice'];
+            $user->save();
+            $order = Order::create([
+                'user_id' => 1,
+                'order_id' => $order_id['order'],
+                'service_id' => $pass['service'],
+                'link' => $pass['link'],
+                'quantity' => $pass['quantity'],
+                'runs' => $pass['runs'] ?? 0,
+                'interval' => $pass['interval'] ?? 0,
+                'charge' => $pass['price'],
+                'currency' => 'USD',
+                'my_charge' => $pass['myPrice']
+            ]);
+            DB::commit();
+
+            $responce = [
+                'message' => 'تم ارسال طلبك بنجاح',
+                'order' => $order_id['order'],
+                'service' => $service->name,
+                'price'=>$pass['myPrice'],
+                'link'=>$pass['link']??'#',
+                'qun'=>$pass['quantity']??'~'
+            ];
+            return redirect()->back()->with(['type_component' => 'Default','successOrder'=>$responce]);
+        }catch (\Exception$ex){
+        DB::rollBack();
+            return redirect()->back()->with(['error'=>'حدث خطا ما حاول مرة اخرى']);
+
+        }
     }
 
     /**

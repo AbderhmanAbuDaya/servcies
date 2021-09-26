@@ -31,7 +31,7 @@ return [
         'array' => 'The :attribute must have between :min and :max items.',
     ],
     'boolean' => 'The :attribute field must be true or false.',
-    'confirmed' => 'The :attribute confirmation does not match.',
+    'confirmed' => ' :attribute  ليست متطابقة',
     'current_password' => 'The password is incorrect.',
     'date' => 'The :attribute is not a valid date.',
     'date_equals' => 'The :attribute must be a date equal to :date.',
@@ -158,7 +158,10 @@ return [
         'order.quantity'=>'الكمية',
         'order.answer_number'=>'رقم خيار تصويت',
         'order.min'=>'اقل كمية',
-        'order.max'=>'اكبر كمية'
+        'order.max'=>'اكبر كمية',
+        'old_password'=>'كلمة المرور القديمة',
+        'password'=>' كلمة المرور الجديدة',
+        'password_confirmation'=>'تاكيد كلمة المرور'
     ],
 
 ];

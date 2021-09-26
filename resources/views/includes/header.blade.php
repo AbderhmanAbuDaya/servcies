@@ -11,8 +11,8 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse">
                 <li class="visible-xs"><a href="#">تسجيل خروج <span class="fa fa-fw fas fa-sign-out pull-right"></span></a></li>
-                <li class="hidden-xs"><a href="#"><span class="badge">$0.00</span></a></li>
-                <li class="hidden-xs "><a href="#">User <span class="visible-xs fa fa-fw fas fa-user pull-right"></span></a></li>
+                <li class="hidden-xs"><a href="#"><span class="badge">${{auth()->user()->wallet}}</span></a></li>
+                <li class="hidden-xs "><a href="#">{{auth()->user()->name}} <span class="visible-xs fa fa-fw fas fa-user pull-right"></span></a></li>
                 <li class="hidden-xs"><a href="#"><i class="fa fa-sign-out"></i></a></li>
                 </li>
             </ul>

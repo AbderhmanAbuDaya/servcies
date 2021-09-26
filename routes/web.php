@@ -29,6 +29,9 @@ Route::group(['middleware'=>'auth'],function (){
     Route::get('category/services',[\App\Http\Controllers\ServiceController::class,'servicesToCategory'])->name('service.category');
     Route::get('service',[\App\Http\Controllers\ServiceController::class,'getService'])->name('service.get');
     Route::resource('orders','App\Http\Controllers\OrderController');
+    Route::get('settings',[\App\Http\Controllers\SettingController::class,'setting'])->name('settings');
+    Route::post('settings/edit/percentage',[\App\Http\Controllers\SettingController::class,'editPercentage'])->name('settings.percentage');
+    Route::post('settings/edit/password',[\App\Http\Controllers\SettingController::class,'changePassword'])->name('settings.password');
 });
 
 Route::get('/questions',[\App\Http\Controllers\HomeController::class,'questions'])->name('questions');

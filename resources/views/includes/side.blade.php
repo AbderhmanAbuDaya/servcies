@@ -14,6 +14,7 @@
                             <li><a  href="https://youtu.be/EWa5PukKbIs">شرح الموقع بالفيديو<span class="fa fa-fw fa fa-play pull-right"></span></a></li>
                             <li><a  href="#"> الدعم الفني<span class="fa fa-fw fas fa-plug pull-right"></span></a></li>
                             <li><a  href="{{route('questions')}}">الأسئلة الشائعة<span class="fa fa-fw fas fa-question-circle pull-right"></span></a></li>
+                            <li><a  href="{{route('settings')}}"> الاعدادات<span class="fa fa-fw fas fa-question-circle pull-right"></span></a></li>
                         </div>
                     </ul>
                 </div>
