@@ -2,25 +2,24 @@
 
 
 @section('content')
-
-                    <div class="row">
+                     <div class="row">
                         <div class="wrapper">
                             <div class="content  rtl-content ">
                                 <!-- Main variables *content* -->
                                 <div class="container-fluid">
                                     <div class="row  row-flex ">
-                                        <div class="col-md-8">
+                                        <div class="col-md-12">
                                             <ul class="nav nav-pills nav-justified  rtl-nav ">
-                                                <li class="all "><a href="#">الجميع</a></li>
-                                                <li class="pending "><a href="#">في الإنتظار</a></li>
-                                                <li class="inprogress  active "><a href="#">في التنفيذ</a></li>
-                                                <li class="completed "><a href="#">مكتمل</a></li>
-                                                <li class="partial "><a href="#">مكتمل جزئي</a></li>
-                                                <li class="processing "><a href="#">في المعالجة</a></li>
-                                                <li class="canceled "><a href="#">ملغي</a></li>
+                                                <li class="all "><a href="{{route('order.status')}}">الجميع</a></li>
+                                                <li class="pending "><a href="{{route('order.status',['status' => 'pending'])}}">في الإنتظار</a></li>
+                                                <li class="inprogress"><a href="{{route('order.status',['status' => 'inprogress'])}}">في التنفيذ</a></li>
+                                                <li class="completed ""><a href="{{route('order.status',['status' => 'completed'])}}">مكتمل</a></li>
+                                                <li class="partial "><a href="{{route('order.status',['status' => 'partial'])}}">مكتمل جزئي</a></li>
+                                                <li class="processing "><a href="{{route('order.status',['status' => 'processing'])}}">في المعالجة</a></li>
+                                                <li class="canceled "><a href="{{route('order.status',['status' => 'canceled'])}}">ملغي</a></li>
                                             </ul>
                                         </div>
-                                        <div class="col-md-4">
+                                        {{-- <div class="col-md-4">
                                             <div class="pull-right search  rtl-form ">
                                                 <form method="" id="history-search">
                                                     <div class="input-group">
@@ -31,7 +30,7 @@
                                                     </div>
                                                 </form>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                     </div>
                                     <div class="row">
                                         <div class="col-lg-12">
@@ -51,7 +50,29 @@
                                                             <th>العدد المتبقي</th>
                                                         </tr>
                                                         </thead>
-                                                        <tbody></tbody>
+                                                        <tbody>
+                                                            @if (isset($orders) && $orders->count() > 0)
+                                                                @foreach ($orders as $order)
+                                                                    <tr>
+                                                                        <td> {{$order->order_id}} </td>
+                                                                        <td> {{$order->created_at}} </td>
+                                                                        <td> {{$order->link}} </td>
+                                                                        <td> {{$order->charge}} </td>
+                                                                        <td> ## </td>
+                                                                        <td> {{$order->quantity}} </td>
+                                                                        <td> {{$order->service->name}} </td>
+                                                                        <td> {{$order->status}} </td>
+                                                                        <td> ## </td>
+                                                                    </tr>
+                                                                @endforeach
+                                                                @else
+                                                                <tr>
+
+                                                                       <td colspan="9" style="padding: 40px; font-size: 22px"> لا يوجد طلبات </td>
+                                                                    
+                                                                </tr>
+                                                            @endif
+                                                        </tbody>
                                                     </table>
                                                 </div>
                                             </div>
@@ -60,13 +81,13 @@
                                         </div>
                                     </div>
                                 </div>
-                                <footer>
+                                {{-- <footer>
                                     <div class=" rtl-content ">
                                         <div class="" style="font-size: 12px;">
                                             موقع <a href="/" class="text-primary">دكتور عبود</a> © 2012–2020. جميع الحقوق محفوظة. <span><a href="/terms" class="text-primary">شروط الإستخدام</a> | <a href="#" class="text-primary">الأسئلة الشائعة</a> | <a href="#" class="text-primary">التعليمات</a> | <a href="#" class="text-primary">إتصل بنا</a> | <a href="#" class="text-primary">سياسة الإسترجاع</a></span></div>
 
                                     </div>
-                                </footer>
+                                </footer> --}}
                             </div>
 
 @endsection
@@ -136,8 +157,10 @@
                    }
 
                });
-           })
+           });
+
 
      </script>
+
 
 @endsection

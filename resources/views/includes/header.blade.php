@@ -10,10 +10,26 @@
             <a class="navbar-brand" href="/"><span class="visible-xs">  عبود  دكتور  </span></a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
-                <li class="visible-xs"><a href="#">تسجيل خروج <span class="fa fa-fw fas fa-sign-out pull-right"></span></a></li>
-                <li class="hidden-xs"><a href="#"><span class="badge">${{auth()->user()->wallet}}</span></a></li>
-                <li class="hidden-xs "><a href="#">{{auth()->user()->name}} <span class="visible-xs fa fa-fw fas fa-user pull-right"></span></a></li>
-                <li class="hidden-xs"><a href="#"><i class="fa fa-sign-out"></i></a></li>
+                <li class="visible-xs">
+                    {{-- <form id="my_form" method="POST" action="{{ route('logout') }}">
+                        @csrf
+            
+                        <button type="submit" class="getstarted scrollto">
+                            خروج
+                        </button> --}}
+                    {{-- <a href="#">تسجيل خروج <span class="fa fa-fw fas fa-sign-out pull-right"></span></a> --}}
+                </li>
+                <li class="hidden-xs balance"><a href="#"><span class="badge">$0.00</span></a></li>
+                <li class="hidden-xs username "><a href="#">{{Auth()->user()->name}} <span class="visible-xs fa fa-fw fas fa-user pull-right"></span></a></li>
+                <li class="hidden-xs">
+                    <form id="my_form" method="POST" action="{{ route('logout') }}">
+                        @csrf
+            
+                        <a href="javascript:{}" onclick="document.getElementById('my_form').submit();" class="getstarted scrollto">
+                            <i class="fa fa-sign-out"></i>
+                        </a>
+                    </form>
+                        {{-- <a href="#"><i class="fa fa-sign-out"></i></a></li> --}}
                 </li>
             </ul>
         </div>

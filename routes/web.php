@@ -14,6 +14,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// Yaseen.
+Route::get('/chat', function () {
+    return view('website');
+});
+
+Route::get('/index', function () {
+    return view('website.index');
+})->name('landing-page');
+
+// Display All Messages In Dashboard (For Admin)
+Route::get('/message',[\App\Http\Controllers\HomeController::class,'message'])->name('message.index');
+// In Landing Page (For User)
+Route::post('/send-message',[\App\Http\Controllers\HomeController::class,'sendMessage'])->name('sendMessage');
+
 Route::get('/',[\App\Http\Controllers\HomeController::class,'index'])->name('home');
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -29,9 +43,11 @@ Route::group(['middleware'=>'auth'],function (){
     Route::get('category/services',[\App\Http\Controllers\ServiceController::class,'servicesToCategory'])->name('service.category');
     Route::get('service',[\App\Http\Controllers\ServiceController::class,'getService'])->name('service.get');
     Route::resource('orders','App\Http\Controllers\OrderController');
-    Route::get('settings',[\App\Http\Controllers\SettingController::class,'setting'])->name('settings');
-    Route::post('settings/edit/percentage',[\App\Http\Controllers\SettingController::class,'editPercentage'])->name('settings.percentage');
-    Route::post('settings/edit/password',[\App\Http\Controllers\SettingController::class,'changePassword'])->name('settings.password');
+
+    // Yaseen.
+    Route::get('/orders',[\App\Http\Controllers\OrderController::class,'index'])->name('order.status');
+   
+
 });
 
 Route::get('/questions',[\App\Http\Controllers\HomeController::class,'questions'])->name('questions');

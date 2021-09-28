@@ -1,15 +1,20 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use App\Models\Service;
 use App\Services\Drd3mService;
+use App\Models\Service;
+use App\Models\Order;
+use App\Models\User;
+
 use DOMDocument;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class ServiceController extends Controller
 {
+    /**
+     * @var App\Services\Drd3mService
+     */
     protected $drd3mService;
     public function __construct(Drd3mService $drd3mService){
         $this->drd3mService=$drd3mService;
@@ -106,19 +111,6 @@ class ServiceController extends Controller
 
             $services= $this->drd3mService->service(['key'=>'6fa5f190e70a20c81d5e8b175f2e6304',
                 'action'=>'services']);
-        dd($services);
-//        $ids=collect($services)->pluck('service');
-//        $ids_in_servies=Service::select('id')->whereIn('id',$ids)->get()->pluck('id');
-//        $ids=$ids->diff($ids_in_servies);
-//        $services = collect($services)->filter(function ($item, $key) use ($ids) {
-//            foreach ($ids as $id)
-//                if ($item['service']==$id){
-//                    return true;
-//                }
-//
-//        });
-//        Service::destroy(Service::all());
-
         $items=[];
         foreach ($services as $item):
             $items[]=[

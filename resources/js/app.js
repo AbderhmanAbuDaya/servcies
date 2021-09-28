@@ -2,7 +2,7 @@ require('./bootstrap');
 
 require('alpinejs');
 // Example POST method implementation:
-async function postData(url = '', data = {},method,header={}) {
+async function postData(url = '', data = {}, method, header = {}) {
     // Default options are marked with *
     const response = await fetch(url, {
         method: method, // *GET, POST, PUT, DELETE, etc.
@@ -20,3 +20,9 @@ async function postData(url = '', data = {},method,header={}) {
     });
     return response.json(); // parses JSON response into native JavaScript objects
 }
+
+
+// Yaseen.
+// window.Echo.channel('chat').listen('ChatEvent', (e) => {
+//     alert(e.message);
+// });
