@@ -8,7 +8,7 @@
             <div class="col-md-12">
                 <div class="well  rtl-content ">
                     <?php
-                    $m_shop = 'P1053523513';
+                    $m_shop = 'API';
                     $m_orderid = '665656';
                     $m_amount = number_format(100, 2, '.', '');
                     $m_curr = 'USD';

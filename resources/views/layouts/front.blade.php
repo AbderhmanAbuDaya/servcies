@@ -16,9 +16,11 @@
     <title>طلب جديد</title>
 </head>
 <body  class="rtl" >
-<div class="container">
-    <div class="row">
-        <div class="wrapper">
+
+    <div class="row" style="border: none;
+    background: #213b52;">
+        <div class="container">
+        <div class="wrapper wrapper-navbar">
 
 
         <!-- Start Nav -->
@@ -31,7 +33,8 @@
 <!-- Start Sidebar  -->
         </div>
     </div>
-</div>
+    </div>
+
 
 <div class="content  rtl-content ">
     @yield('content')

@@ -9,6 +9,9 @@ use Illuminate\Support\Facades\Hash;
 
 class SettingController extends Controller
 {
+    public function __construct()
+    {
+    }
 
     public function setting(){
         $setting=Setting::where('key','percentage')->first();

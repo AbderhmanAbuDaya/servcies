@@ -46,6 +46,7 @@
                         <button type="submit" class="btn btn-primary btn-login">تغيير كلمة المرور</button>
                     </form>
                 </div>
+                @admin
                 <div class="well">
                     <div class="form-group">
                         <form action="{{route('settings.percentage')}}" method="post">
@@ -56,6 +57,8 @@
                         </form>
                     </div>
                 </div>
+                @endadmin
+
             </div>
 
             </div>
